@@ -3,9 +3,6 @@ const fetch = require('node-fetch');
 console.log('- App works!');
 
 const apikey            = 'yXpbmDtUwXMzmb0krV9YAO7L46AcCOXi';
-// const apikey            = 'Zg0gUOMeo7TjPfsCQXP8vhzKfY0Tep3N';
-// const apikey            = 'gL6zrnbDKkebQ7awGu1HQQV7Vwa6QGZv';
-
 const baseUrl           = 'http://dataservice.accuweather.com';
 const searchLocation    = 'san';
 
