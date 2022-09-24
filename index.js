@@ -6,7 +6,14 @@ const apikey            = 'yXpbmDtUwXMzmb0krV9YAO7L46AcCOXi';
 const baseUrl           = 'http://dataservice.accuweather.com';
 const searchLocation    = 'san';
 
-const getWeather = async (locationSearch) => {
+const getMedia = (valores) => {
+    let totalRegs   = valores.length;
+        media       = valores.reduce((previous, current) => current+= previous);
+        media       /= totalRegs;
+    return media;
+}
+
+const getWeather = (locationSearch) => {
     fetch(`${baseUrl}/locations/v1/cities/search/?apikey=${apikey}&q=${locationSearch}&language=en-us&details=false`)
     .then(response => {
         if (response.ok) {
@@ -42,11 +49,8 @@ const getWeather = async (locationSearch) => {
                     console.log(`- El tiempo en [${location}, ${state}, ${country}]: ${temp}º${unitTemp} / ${weatherText} / Humedad: ${humidity}`);
                 });
 
-                let totalRegs   = humedades.length;
-                humedadProm     = humedades.reduce((previous, current) => current+= previous);
-                humedadProm     /= totalRegs;
-
-                console.log(`- La Humedad Promedio es: ${humedadProm}`);
+                let humedadMedia = getMedia(humedades);
+                console.log(`\n\t- La Humedad Media es: ${humedadMedia}`);
             })
         });
     })
