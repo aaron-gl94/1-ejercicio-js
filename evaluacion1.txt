@@ -1,0 +1,85 @@
+● ¿Qué diferencia hay entre una función síncrona y una asíncrona?
+    - En la asíncrona se refiere a la ejecución de procesos ejecutándose de manera simultanea.
+    - En la programación síncrona se refiere a la ejecución de un solo proceso de manera simultanea.
+    
+● ¿Qué es y para qué sirve un callback?
+    - Es una función que se pasa a otra función como un argumento, que luego se invoca dentro de la función externa para completar algún tipo de rutina o acción.
+
+● ¿Qué problemas surgen al usar callbacks en un bucle?
+    - La ejecución de un callback toma un tiempo para retornar una respuesta o solución, es decir; las funciones "callback" pueden entenderse como asincrónicos.
+        Lo que al momento de invocar un callback dentro de otro ocasionará que la ejecución brinque al siguiente bloque de código dejando la función callback inicial en el "call stack", y así sucesivamente con cada uno de los callbacks internos en bucle.
+        Donde, tal vez, el retorno de las respuestas de los callbacks internos nunca se dé, pues el compilador seguramente rompa la ejeción del código al pedirse varios subprocesos.
+
+    Esto es conocido como "Callback Hell" ó "Pyramid of Doom".
+
+● ¿Qué es el “callback hell” y cómo podemos mitigarlo?
+    - Es el uso de callbacks en bucle formando un callstack que posiblemente no se ejecutará por qué ejecutaría varios sub procesos, se puede identificar visualmente en nuestro código cuando se forma una "Pyramid of Doom" con callback anidados.
+    - La forma convencional de mitigar los "callback hell" es con el uso de promesas para no anidar callbacks, pero existen otras opciones como; el uso de async/await, diseñar el código de forma modular y el uso de buenas prácticas de programación.
+
+● ¿Qué son las promesas y qué aportan a la programación de código asíncrono?
+    - Es una función u objeto (bloque de código) que se sabe, será ejecutada en un futuro y que se espera una posible respuesta; pendiente, resuelto o rechazado.
+        Lo cual permite avanzar con la siguiente línea de código en lo que se espera la respuesta de la promesa.
+
+● ¿Cómo manejamos errores en las promesas?
+    - Las promesas en JS son represantadas por un "Object", que contiene los siguientes métodos:
+       - .then(resolve):            Ejecuta la función callback "resolve()" cuando se cumple la promesa.
+       - .catch(reject):            Ejecuta la función callback "reject()" cuando la promesa fue rechazada.
+       - .then(resolve, reject):    Equivale a los 2 métodos anteriores dentro del mismo método ".then()".
+       - .finally(end):             Ejecuta la función callback "end()" una vez finalizada la promesa, independientemente si la promesa fue cumplida o rechazada. 
+
+● ¿Cuándo es una mala opción usar promesas?*
+    - Se utilizan demasiadas promesas encadenadas que al final generen un "Error Stack" y no pueda identificar el origen del error especifico en el .catch().
+
+● ¿Qué ventajas nos aporta usar async/await? ¿Sirve para cualquier caso de programación asíncrona?
+
+    - El uso de "Async / Await" es una nueva forma de escribir código asincrónico que a diferencia de usar "callbacks" o "Promise", este parece ser sincrónico en su ejeción.
+    - Se implementa en base a promesas y no se puede usar para funciones "callback" ordinarias.
+    - No es bloqueante.
+    - Hace que el código sea más sencillo, pues no se tiene que indentar funciones como .then() y generar un "Error Stack" para el manejo de errores.
+    - "Async / Await" permite que el uso de try/catch maneje errores sincrónicos y asincrónicos, lo que fácilita la identificación y la depuración de los mismos.
+
+● ¿Qué es y para qué sirve CORS?
+    - CORS (Cross-Origin Resource Sharing) es un mecanismo o política de seguridad que permite controlar las peticiones HTTP asíncronas.
+    - Sirve para controlar las peticiónes desde un navegador a un servidor con un dominio diferente de la página cargada originalmente.
+      Este tipo de peticiones se llaman peticiones de origen cruzado (Cross-Origin).
+
+● ¿Qué es una “Preflighted request”?
+    - Una petición preflight es una petición realizada para comprobar si el protocolo CORS es comprendido.
+        Es una petición de cabecera OPTIONS, que emplea tres parametros:
+        - Access-Control-Request-Method.
+        - Access-Control-Request-Headers.
+        - Origin.
+
+● ¿Qué requisitos necesita una API para ser consumida desde cualquier dominio en un navegador web?
+    - De manera general una petición API o HTTP se compone de 3 partes:
+        - Petición HTTP:
+            - Línea de petición:
+                Define el método HTTP y la URL/URI/Endpoint.
+                Métodos HTTP: GET/POST/PUT/PATCH/DELETE/OPTIONS.
+            - Cabecera:
+                Son metadatos que se envían en la petición para brindar información solicitada.
+            - Cuerpo:
+                Es el conjunto de parametros (Query) u objetos (ej.: JSON, XML) que enviaremos al servidor para obtener información especifica.
+
+        - Respuesta HTTP:
+            - Linea de estatus:
+                Aquí se indica el estatus de la respuesta con código de estatus HTTP (2XX, 4XX o 5XX).
+            - Cabecera:
+                Son lo metadatos generedos por el servidor al que hicimos la petición para indicar el protocolo que se empleo en la comunicación cliente-servidor.
+            - Cuerpo (opcional):
+                No siempre se recibirá información en este bloque, pero por lo general se retorna información solicitada en formato de texto plano o JSON.
+      
+● Describe cómo funciona y para qué sirve JSONP.
+
+    - JSONP (JSON with Padding) es un método que permite enviar datos estructurados en JSON entre dominios distintos.
+      Para eludir la política de seguridad del mismo origen al solicitar archivos de otros dominios.
+      JSONP no utiliza el objeto XMLHttpRequest como hace el código JSON habitual, sino el elemento script, incluyendo una llamada de función.
+
+    - JSONP ofrece una solución al obstáculo de la SOP (Same-Origin Policy) mediante el elemento "<script>".
+        En el atributo src de este elemento, pueden escribirse los dominios que se deseen sin que las directrices de la SOP intervengan.
+        Así, mediante este atributo, se pueden indicar las URLs que pertenezcan a dominios ajenos y que devuelvan código JSON u otros archivos.
+        El script solo sirve de mensajero para transmitir la solicitud JSONP al servidor web correspondiente, pero no surte ningún efecto por sí mismo.
+        Para que el cliente pueda procesar los datos más adelante, el servidor los empaqueta como parámetros de una función de JavaScript.
+        Esta función está predefinida en el navegador y es transmitida al servidor en la query string(o cadena de consulta, también parte de la solicitud) del URL.
+
+        Nota: Cada solicitud JSONP requiere un único elemento <script>. En este sentido, del lado del cliente se puede escoger entre añadir un nuevo elemento (script element injection) o volver a usar un elemento ya existente.
